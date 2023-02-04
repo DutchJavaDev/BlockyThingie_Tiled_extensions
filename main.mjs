@@ -17,13 +17,25 @@ var customFormat = {
                 for(var j = 0; j < layer.objectCount; j++)
                 {
                     var object = layer.objectAt(j);
+                    
+                    var nameLenght = object.name.length;
+                    var name = object.name;
 
-                    if(object.name.lenght > 16)
+                    if(nameLenght === 0)
+                    {
+                        name = "col"
+                    }
+
+                    if( nameLenght > 0 && nameLenght > 16)
                     {
                         tiled.error(`${object.name} is longer than 16 characters!`);
                         break;
                     }
-                    objectData += `${object.name} ${object.x} ${object.y}\n`;
+                    var xpos = object.x.toFixed(0);
+                    var ypos = object.y.toFixed(0);
+                    var width = object.width.toFixed(0);
+                    var height = object.height.toFixed(0);
+                    objectData += `${name} ${xpos} ${ypos} ${width} ${height}\n`;
                 }
             }
 
@@ -39,7 +51,7 @@ var customFormat = {
                             // add static body instead? to block player
                             continue;
                         }
-
+                        var props = tile.properties();
                         tileData += `${tile.id} ${x} ${y}\n`;
                     }
                 }
