@@ -7,7 +7,8 @@ var customFormat = {
         var mapData = `${map.width} ${map.height} ${map.tileWidth} ${map.tileHeight}\n`;
         var tileData = 'tile_data\n';
         var objectData = 'object_data\n'
-        
+        var tileSet = map.tilesets[0]; // eh?
+
         for(var i = 0; i < map.layerCount; i++)
         {
             var layer = map.layerAt(i);
@@ -51,8 +52,9 @@ var customFormat = {
                             // add static body instead? to block player
                             continue;
                         }
-                        var props = tile.properties();
-                        tileData += `${tile.id} ${x} ${y}\n`;
+                        var tileTexture = tileSet.findTile(tile.id);
+
+                        tileData += `${tile.id} ${x} ${y} \n`;
                     }
                 }
             }
@@ -64,7 +66,6 @@ var customFormat = {
         file.write(mapData)
         file.write(objectData)
         file.write(tileData)
-        file.write(`${tiled.version}`);
         file.commit()
         file.close()
     },
