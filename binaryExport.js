@@ -16,9 +16,9 @@ tiled.assetSaved.connect(function (asset) {
 
     // file name
     var mapName = asset.fileName;
-    var worldFileName = mapName.replace('.tmx', '.w.') // world file
+    var worldFileName = mapName.replace('.tmx', '.wf.') // world file
     var tileSetFileName = mapName.replace('.tmx', '.tf.') // tile file
-    var objectsFileName = mapName.replace('.tmx', '.o.') // collision file
+    var objectsFileName = mapName.replace('.tmx', '.cf.') // collision file
 
     var map = asset;
 
@@ -184,43 +184,41 @@ function ExportTilesSets(tileSets, fileName)
 
                 tileId++
 
-                //tileId++
-                // var objectsGroup = tile.objectGroup;
+                var objectsGroup = tile.objectGroup;
 
-                // if (objectsGroup != null) {
-                //     objectsGroup.objects.forEach(obj => {
+                if (objectsGroup != null) {
+                    objectsGroup.objects.forEach(obj => {
 
-                //         tileCollisionData.push({
-                //             type: int_type,
-                //             value: tileId
-                //         })
+                        tileCollisionData.push({
+                            type: int_type,
+                            value: tileId
+                        })
 
-                //         // xposition
-                //         tileCollisionData.push({
-                //             type: int_type,
-                //             value: obj.x
-                //         })
+                        // xposition
+                        tileCollisionData.push({
+                            type: int_type,
+                            value: obj.x
+                        })
 
-                //         // yposition
-                //         tileCollisionData.push({
-                //             type: int_type,
-                //             value: obj.y
-                //         })
+                        // yposition
+                        tileCollisionData.push({
+                            type: int_type,
+                            value: obj.y
+                        })
 
-                //         // width
-                //         tileCollisionData.push({
-                //             type: int_type,
-                //             value: obj.width
-                //         })
+                        // width
+                        tileCollisionData.push({
+                            type: int_type,
+                            value: obj.width
+                        })
 
-                //         // height
-                //         tileCollisionData.push({
-                //             type: int_type,
-                //             value: obj.height
-                //         })
-                //     });
-                // }
-                
+                        // height
+                        tileCollisionData.push({
+                            type: int_type,
+                            value: obj.height
+                        })
+                    });
+                }
             }
         }
 
