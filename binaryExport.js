@@ -22,7 +22,11 @@ tiled.assetSaved.connect(function (asset) {
 
     var map = asset;
 
-    ExportTilesSets(map.usedTilesets(), tileSetFileName);
+    var tileSets = map.usedTilesets();
+
+    var tileSetCount = tileSets.length;
+
+    ExportTilesSets(tileSets, tileSetFileName);
 });
 // Tile layers
 function ExportWorld(map, fileName) {
@@ -245,6 +249,7 @@ function ExportTilesSets(tileSets, fileName)
         var tileCollisionBuffer = new ArrayBuffer(tileCollisionData.length * int_size)
         var tileCollisionView = new DataView(tileCollisionBuffer)
         bufferIndex = 0
+
         tileCollisionData.forEach(b => {
             if(b.type === int_type || b.type === float_type)
             {
