@@ -37,7 +37,7 @@ tiled.assetSaved.connect(function (asset) {
         }
 
         if (layer.isTileLayer) {
-            ExportWorld(layer, worldFileName, objectsFileName)
+            ExportWorld(layer, worldFileName, objectsFileName, map.tileWidth, map.tileHeight)
         }
     }
 })
@@ -187,6 +187,23 @@ function ExportTilesSets(tileSets, fileName) {
                 if (!tile) {
                     // This can be ignored.... most of the time
                     tiled.log(`Null tile found, skipping: ${tileId}`)
+                    tileData.push({
+                        type: int_type,
+                        value: -1
+                    })
+    
+                    // xposition
+                    tileData.push({
+                        type: int_type,
+                        value: x
+                    })
+    
+                    // yposition
+                    tileData.push({
+                        type: int_type,
+                        value: y
+                    })
+                    tileId++
                     continue
                 }
 
@@ -261,7 +278,7 @@ function ExportTilesSets(tileSets, fileName) {
     }
 }
 
-function ExportWorld(tileLayer, fileName, objectsFileName) {
+function ExportWorld(tileLayer, fileName, objectsFileName, tileWidth, tileHeight) {
     var temp = objectsFileName
     var _t = objectsFileName.split('/')
     objectsFileName = _t[_t.length-1]
@@ -269,9 +286,6 @@ function ExportWorld(tileLayer, fileName, objectsFileName) {
     var tile_fileName = `${name}.map.bin`
     var width = tileLayer.width
     var height = tileLayer.height
-    var tileWidth = tileLayer.tileWidth
-    var tileHeight = tileLayer.tileHeight
-
     // world data
     var worldData = [
         {
@@ -302,10 +316,10 @@ function ExportWorld(tileLayer, fileName, objectsFileName) {
             type: string_type,
             value: tile_fileName
         },
-        {
-            type: string_type,
-            value: objectsFileName
-        }
+        // {
+        //     type: string_type,
+        //     value: objectsFileName
+        // }
     ];
 
     var numCount = worldData.filter(i => i.type === int_type || i.type === float_type).length
@@ -372,7 +386,7 @@ function WriteData(dataArray, view) {
             if (b.value.length < 32) {
                 // Heheheh boiiiiii
                 while (b.value.length !== 31) {
-                    b.value += ' '
+                    b.value += '\0'
                 }
             }
 
