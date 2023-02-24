@@ -185,25 +185,25 @@ function ExportTilesSets(tileSets, fileName) {
                 var tile = tileset.findTile(tileId)
 
                 if (!tile) {
-                    // This can be ignored.... most of the time
-                    tiled.log(`Null tile found, skipping: ${tileId}`)
-                    tileData.push({
-                        type: int_type,
-                        value: -1
-                    })
+                    // // This can be ignored.... most of the time
+                    // tiled.log(`Null tile found, skipping: ${tileId}`)
+                    // tileData.push({
+                    //     type: int_type,
+                    //     value: -1
+                    // })
     
-                    // xposition
-                    tileData.push({
-                        type: int_type,
-                        value: x
-                    })
+                    // // xposition
+                    // tileData.push({
+                    //     type: int_type,
+                    //     value: x
+                    // })
     
-                    // yposition
-                    tileData.push({
-                        type: int_type,
-                        value: y
-                    })
-                    tileId++
+                    // // yposition
+                    // tileData.push({
+                    //     type: int_type,
+                    //     value: y
+                    // })
+                    // tileId++
                     continue
                 }
 
@@ -223,8 +223,6 @@ function ExportTilesSets(tileSets, fileName) {
                     type: int_type,
                     value: y
                 })
-
-                tileId++
 
                 var objectsGroup = tile.objectGroup
 
@@ -261,10 +259,12 @@ function ExportTilesSets(tileSets, fileName) {
                         })
                     })
                 }
+
+                tileId++
             }
         }
 
-        //        tiled.log(`Tiles: ${tileData.length / 3}`)
+        //tiled.log(`Tiles: ${tileData.length / 3}`)
 
         var tileBuffer = new ArrayBuffer(tileData.length * int_size)
         WriteData(tileData, new DataView(tileBuffer))
@@ -361,6 +361,8 @@ function ExportWorld(tileLayer, fileName, objectsFileName, tileWidth, tileHeight
             })
         }
     }
+
+    tiled.log(`Tiles: ${tileData.length / 3}`)
 
     var numCount = tileData.filter(i => i.type === int_type).length
     var tbuffer = new ArrayBuffer(numCount * int_size)
